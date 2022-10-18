@@ -1,0 +1,36 @@
+{
+  "name": "sequelize-mssql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "start": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhaktibuana/sequelize-mssql.git"
+  },
+  "author": "Bhakti Mega Buana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhaktibuana/sequelize-mssql/issues"
+  },
+  "homepage": "https://github.com/bhaktibuana/sequelize-mssql#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "sequelize": "^6.25.2",
+    "tedious": "^15.1.0",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "jest": "^29.2.0",
+    "nodemon": "^2.0.20"
+  }
+}
