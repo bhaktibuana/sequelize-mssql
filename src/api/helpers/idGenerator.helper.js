@@ -33,15 +33,18 @@ const removeVowels = (str) => {
   splitStr.shift();
   const restStr = splitStr.join("");
 
-  const vowels = ["a", "i", "u", "e", "o", "A", "I", "U", "E", "O"];
+  let consonantsStr = "bcdfghjklmnpqrstvwyz";
+  consonantsStr = consonantsStr + consonantsStr.toUpperCase();
+  const consonants = consonantsStr.split("");
+
   const output = [firstLetter];
 
   for (let i = 0; i < restStr.length; i++) {
-    let present = true;
+    let present = false;
 
-    for (let j = 0; j < vowels.length; j++) {
-      if (restStr[i] === vowels[j]) {
-        present = false;
+    for (let j = 0; j < consonants.length; j++) {
+      if (restStr[i] === consonants[j]) {
+        present = true;
         break;
       }
     }
