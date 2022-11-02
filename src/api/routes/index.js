@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.use("/", (_, res) => {
   res.status(200).json({
-    message: "SHE API Test Server.",
+    message: "Sequelize MSSQL Development Server.",
   });
 });
 
