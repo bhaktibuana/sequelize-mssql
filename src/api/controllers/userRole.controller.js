@@ -8,7 +8,6 @@ const getData = async (req, res) => {
   await UserRole.findAll({ where: { roleCode: { [Op.ne]: "SA" } } })
     .then((results) => {
       if (results.length) {
-        console.log(results.length);
         responseOk("Fetch user role data success", results, res);
       } else {
         responseErr("No user role data found", 404, null, res);

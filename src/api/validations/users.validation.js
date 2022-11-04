@@ -82,7 +82,60 @@ const registerValidation = (req, res, next) => {
     });
 };
 
+const selfUpdateValidation = (req, res, next) => {
+  const data = {
+    name: req.body.name !== "" ? (req.body.name ? req.body.name : null) : "",
+    username:
+      req.body.username !== ""
+        ? req.body.username
+          ? req.body.username
+          : null
+        : "",
+    email:
+      req.body.email !== "" ? (req.body.email ? req.body.email : null) : "",
+    password: req.body.password,
+  };
+
+  const schemaData = {
+    name: yup.string().max(100).required(),
+    username: yup.string().max(30).required(),
+    email: yup.string().email().max(100).required(),
+    password: yup.string().min(8).required(),
+  };
+
+  if (!data.name) {
+    delete data.name;
+    delete schemaData.name;
+  }
+
+  if (!data.username) {
+    delete data.username;
+    delete schemaData.username;
+  }
+
+  if (!data.email) {
+    delete data.email;
+    delete schemaData.email;
+  }
+
+  if (!data.name && !data.username && !data.email) {
+    responseErr("You need to update atleast one data", 400, null, res);
+  }
+
+  const schema = yup.object().shape(schemaData);
+
+  schema
+    .validate(data, { abortEarly: false })
+    .then(() => {
+      next();
+    })
+    .catch((error) => {
+      responseErr("Invalid update data", 400, error.errors, res);
+    });
+};
+
 module.exports = {
   loginValidation,
   registerValidation,
+  selfUpdateValidation,
 };

@@ -1,7 +1,7 @@
 const { usersModel } = require("../models");
-const { connectionError, response } = require("../helpers");
+const { connectionError, response, passwordHash } = require("../helpers");
 
-const { Users } = usersModel;
+const { Users, Op } = usersModel;
 const { responseErr } = response;
 
 const checkUserExist = async (req, res, next) => {
@@ -48,12 +48,7 @@ const checkEmailExist = async (req, res, next) => {
       if (!results) {
         next();
       } else {
-        responseErr(
-          `User with email: ${email} already exist`,
-          400,
-          null,
-          res
-        );
+        responseErr(`User with email: ${email} already exist`, 400, null, res);
       }
     })
     .catch((error) => connectionError(error, res));
@@ -78,8 +73,66 @@ const checkUsernameExist = async (req, res, next) => {
     .catch((error) => connectionError(error, res));
 };
 
+const verifySelfUpdate = async (req, res, next) => {
+  const params = {
+    username: res.locals.payload.username,
+    email: res.locals.payload.email,
+    password: passwordHash(req.body.password),
+  };
+
+  console.log(params.password);
+
+  await Users.findOne({ where: { ...params } })
+    .then((results) => {
+      if (results) {
+        next();
+      } else {
+        responseErr("Wrong password", 401, null, res);
+      }
+    })
+    .catch((error) => connectionError(error, res));
+};
+
+const checkEmailExistSelfUpdate = async (req, res, next) => {
+  const id = res.locals.payload.id;
+  const email = req.body.email ? req.body.email : "";
+
+  await Users.findOne({ where: { email, id: { [Op.ne]: id } } })
+    .then((results) => {
+      if (!results) {
+        next();
+      } else {
+        responseErr(`User with email: ${email} already exist`, 400, null, res);
+      }
+    })
+    .catch((error) => connectionError(error, res));
+};
+
+const checkUsernameExistSelfUpdate = async (req, res, next) => {
+  const id = res.locals.payload.id;
+  const username = req.body.username ? req.body.username : "";
+
+  await Users.findOne({ where: { username, id: { [Op.ne]: id } } })
+    .then((results) => {
+      if (!results) {
+        next();
+      } else {
+        responseErr(
+          `User with username: ${username} already exist`,
+          400,
+          null,
+          res
+        );
+      }
+    })
+    .catch((error) => connectionError(error, res));
+};
+
 module.exports = {
   checkUserExist,
   checkEmailExist,
   checkUsernameExist,
+  verifySelfUpdate,
+  checkEmailExistSelfUpdate,
+  checkUsernameExistSelfUpdate,
 };

@@ -160,7 +160,46 @@ const updateRole = async (req, res) => {
     .catch((error) => connectionError(error, res));
 };
 
-const selfUpdate = async (req, res) => {};
+const selfUpdate = async (req, res) => {
+  const id = res.locals.payload.id;
+  const updatedBy = res.locals.payload.username;
+  const params = req.body;
+
+  if (params.password) {
+    delete params.password;
+  }
+
+  await Users.update(
+    { ...params, updatedBy },
+    { where: { id, isDeleted: false } }
+  )
+    .then((resUpdate) => {
+      if (resUpdate) {
+        Users.findOne({
+          where: { id },
+          include: [
+            {
+              model: UserRole,
+              attributes: {
+                exclude: ["id"],
+              },
+            },
+          ],
+          attributes: {
+            exclude: ["password", "roleId"],
+          },
+        })
+          .then((results) => {
+            const token = generateJwt(results.dataValues);
+            responseOk("Update data success", { token }, res);
+          })
+          .catch((error) => connectionError(error, results));
+      } else {
+        responseErr("Update data failed", 400, null, res);
+      }
+    })
+    .catch((error) => connectionError(error, res));
+};
 
 const changePassword = async (req, res) => {};
 
@@ -172,4 +211,5 @@ module.exports = {
   login,
   register,
   updateRole,
+  selfUpdate,
 };
