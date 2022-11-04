@@ -9,13 +9,13 @@ const { usersController } = require("../controllers");
 const router = express.Router();
 
 router.post(
-  "/userList",
+  "/user-list",
   authMiddleware.isAuth,
   permissionMiddleware.adminPermission,
   usersController.getUsers
 );
 router.post(
-  "/userDetail",
+  "/user-detail",
   authMiddleware.isAuth,
   permissionMiddleware.adminPermission,
   usersController.getUsersDetail
@@ -34,7 +34,7 @@ router.post(
   usersController.register
 );
 router.post(
-  "/updateRole",
+  "/update-role",
   authMiddleware.isAuth,
   permissionMiddleware.superAdminPermission,
   usersController.updateRole
