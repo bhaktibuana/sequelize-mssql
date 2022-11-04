@@ -39,5 +39,14 @@ router.post(
   permissionMiddleware.superAdminPermission,
   usersController.updateRole
 );
+router.post(
+  "/self-update",
+  authMiddleware.isAuth,
+  usersValidation.selfUpdateValidation,
+  usersMiddleware.checkEmailExistSelfUpdate,
+  usersMiddleware.checkUsernameExistSelfUpdate,
+  usersMiddleware.verifySelfUpdate,
+  usersController.selfUpdate
+);
 
 module.exports = router;
