@@ -48,5 +48,12 @@ router.post(
   usersMiddleware.verifySelfUpdate,
   usersController.selfUpdate
 );
+router.post(
+  "/change-password",
+  authMiddleware.isAuth,
+  usersValidation.changePasswordValidation,
+  usersMiddleware.checkUserExistChangePassword,
+  usersController.changePassword
+);
 
 module.exports = router;

@@ -128,6 +128,21 @@ const checkUsernameExistSelfUpdate = async (req, res, next) => {
     .catch((error) => connectionError(error, res));
 };
 
+const checkUserExistChangePassword = async (req, res, next) => {
+  const id = res.locals.payload.id;
+  const oldPassword = passwordHash(req.body.oldPassword);
+
+  await Users.findOne({ where: { id, password: oldPassword } })
+    .then((results) => {
+      if (results) {
+        next();
+      } else {
+        responseErr("Wrong old password", 401, null, res);
+      }
+    })
+    .catch((error) => connectionError(error, res));
+};
+
 module.exports = {
   checkUserExist,
   checkEmailExist,
@@ -135,4 +150,5 @@ module.exports = {
   verifySelfUpdate,
   checkEmailExistSelfUpdate,
   checkUsernameExistSelfUpdate,
+  checkUserExistChangePassword,
 };
