@@ -62,6 +62,7 @@ const registerValidation = (req, res, next) => {
     username: params.username,
     email: params.email,
     password: params.password,
+    passwordConfirmation: params.passwordConfirmation,
   };
 
   const schema = yup.object().shape({
@@ -69,6 +70,11 @@ const registerValidation = (req, res, next) => {
     username: yup.string().max(30).required(),
     email: yup.string().email().max(100).required(),
     password: yup.string().min(8).required(),
+    passwordConfirmation: yup
+      .string()
+      .min(8)
+      .matches(data.password, "password does not match")
+      .required(),
   });
 
   schema
@@ -134,8 +140,38 @@ const selfUpdateValidation = (req, res, next) => {
     });
 };
 
+const changePasswordValidation = (req, res, next) => {
+  const params = req.body;
+
+  const data = {
+    oldPassword: params.oldPassword,
+    newPassword: params.newPassword,
+    newPasswordConfirmation: params.newPasswordConfirmation,
+  };
+
+  const schema = yup.object().shape({
+    oldPassword: yup.string().min(8).required(),
+    newPassword: yup.string().min(8).required(),
+    newPasswordConfirmation: yup
+      .string()
+      .min(8)
+      .matches(data.newPassword, "new password does not match")
+      .required(),
+  });
+
+  schema
+    .validate(data, { abortEarly: false })
+    .then(() => {
+      next();
+    })
+    .catch((error) => {
+      responseErr("Invalid user password data", 400, error.errors, res);
+    });
+};
+
 module.exports = {
   loginValidation,
   registerValidation,
   selfUpdateValidation,
+  changePasswordValidation,
 };

@@ -201,7 +201,47 @@ const selfUpdate = async (req, res) => {
     .catch((error) => connectionError(error, res));
 };
 
-const changePassword = async (req, res) => {};
+const changePassword = async (req, res) => {
+  const id = res.locals.payload.id;
+  const params = {
+    password: passwordHash(req.body.newPassword),
+    passwordConf: passwordHash(req.body.newPasswordConfirmation),
+  };
+
+  if (params.password === params.passwordConf) {
+    delete params.passwordConf;
+
+    await Users.update(params, { where: { id } })
+      .then((resUpdate) => {
+        if (resUpdate) {
+          Users.findOne({
+            where: { id },
+            include: [
+              {
+                model: UserRole,
+                attributes: {
+                  exclude: ["id"],
+                },
+              },
+            ],
+            attributes: {
+              exclude: ["password", "roleId"],
+            },
+          })
+            .then((results) => {
+              const token = generateJwt(results.dataValues);
+              responseOk("Change password success", { token }, res);
+            })
+            .catch((error) => connectionError(error, res));
+        } else {
+          responseErr("Change password failed", 400, null, res);
+        }
+      })
+      .catch((error) => connectionError(error, res));
+  } else {
+    responseErr("New password does not match", 400, null, res);
+  }
+};
 
 const deleteUser = async (req, res) => {};
 
@@ -212,4 +252,5 @@ module.exports = {
   register,
   updateRole,
   selfUpdate,
+  changePassword,
 };
