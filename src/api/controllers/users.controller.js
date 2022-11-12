@@ -14,7 +14,6 @@ const { responseErr, responseOk } = response;
 
 const getUsers = async (req, res) => {
   await Users.findAll({
-    where: { isDeleted: false },
     attributes: ["id", "name", "username", "email", "isDeleted"],
   })
     .then((results) => {
@@ -33,7 +32,6 @@ const getUsersDetail = async (req, res) => {
   await Users.findOne({
     where: {
       id,
-      isDeleted: false,
     },
     include: [
       {
@@ -79,7 +77,7 @@ const login = async (req, res) => {
       if (results) {
         if (!results.isDeleted) {
           const token = generateJwt(results.dataValues);
-          responseOk("Fetch user detail success", { token }, res);
+          responseOk("Login success", { token }, res);
         } else {
           responseErr(
             "Your account is no longer active, please contact the admin to reactivate your account",
@@ -163,6 +161,7 @@ const updateRole = async (req, res) => {
 const selfUpdate = async (req, res) => {
   const id = res.locals.payload.id;
   const updatedBy = res.locals.payload.username;
+  const updatedAt = moment().format("YYYY-MM-DD HH:mm:ss").toString();
   const params = req.body;
 
   if (params.password) {
@@ -170,7 +169,7 @@ const selfUpdate = async (req, res) => {
   }
 
   await Users.update(
-    { ...params, updatedBy },
+    { ...params, updatedBy, updatedAt },
     { where: { id, isDeleted: false } }
   )
     .then((resUpdate) => {
@@ -206,6 +205,8 @@ const changePassword = async (req, res) => {
   const params = {
     password: passwordHash(req.body.newPassword),
     passwordConf: passwordHash(req.body.newPasswordConfirmation),
+    updatedAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
+    updatedBy: res.locals.payload.username,
   };
 
   if (params.password === params.passwordConf) {
@@ -243,7 +244,43 @@ const changePassword = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {};
+const deleteUser = async (req, res) => {
+  const id = req.body.id;
+  const params = {
+    isDeleted: true,
+    updatedAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
+    updatedBy: res.locals.payload.username,
+  };
+
+  await Users.update(params, { where: { id } })
+    .then((results) => {
+      if (results[0] !== 0) {
+        responseOk(`User with id: ${id} deleted successfully`, results, res);
+      } else {
+        responseErr(`Failed to delete user with id: ${id}`, 400, null, res);
+      }
+    })
+    .catch((error) => connectionError(error, res));
+};
+
+const restoreUser = async (req, res) => {
+  const id = req.body.id;
+  const params = {
+    isDeleted: false,
+    updatedAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
+    updatedBy: res.locals.payload.username,
+  };
+
+  await Users.update(params, { where: { id } })
+    .then((results) => {
+      if (results[0] !== 0) {
+        responseOk(`User with id: ${id} restored successfully`, results, res);
+      } else {
+        responseErr(`Failed to restore user with id: ${id}`, 400, null, res);
+      }
+    })
+    .catch((error) => connectionError(error, res));
+};
 
 module.exports = {
   getUsers,
@@ -253,4 +290,6 @@ module.exports = {
   updateRole,
   selfUpdate,
   changePassword,
+  deleteUser,
+  restoreUser,
 };
