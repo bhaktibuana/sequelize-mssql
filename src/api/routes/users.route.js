@@ -55,5 +55,17 @@ router.post(
   usersMiddleware.checkUserExistChangePassword,
   usersController.changePassword
 );
+router.post(
+  "/delete-user",
+  authMiddleware.isAuth,
+  permissionMiddleware.superAdminPermission,
+  usersController.deleteUser
+);
+router.post(
+  "/restore-user",
+  authMiddleware.isAuth,
+  permissionMiddleware.superAdminPermission,
+  usersController.restoreUser
+);
 
 module.exports = router;
