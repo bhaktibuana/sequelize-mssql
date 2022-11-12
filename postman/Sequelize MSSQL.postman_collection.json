@@ -1,0 +1,530 @@
+{
+	"info": {
+		"_postman_id": "1a0d65a2-9d28-4fc8-9beb-7dabd2c29a00",
+		"name": "Sequelize MSSQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6105071"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "user list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/user-list",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"user-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user detail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/user-detail",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"user-detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/login",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "passwordConfirmation",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/register",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "roleId",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/update-role",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"update-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "self update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/self-update",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"self-update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "oldPassword",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "newPasswordConfirmation",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/change-password",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/delete-user",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"delete-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restore user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{users_route}}/restore-user",
+							"host": [
+								"{{base_url}}{{users_route}}"
+							],
+							"path": [
+								"restore-user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user-role",
+			"item": [
+				{
+					"name": "user role list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{user_role_route}}",
+							"host": [
+								"{{base_url}}{{user_role_route}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fruits",
+			"item": [
+				{
+					"name": "create data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{fruits_route}}",
+							"host": [
+								"{{base_url}}{{fruits_route}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{fruits_route}}",
+							"host": [
+								"{{base_url}}{{fruits_route}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete data",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{fruits_route}}/delete-fruit",
+							"host": [
+								"{{base_url}}{{fruits_route}}"
+							],
+							"path": [
+								"delete-fruit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restore data",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{fruits_route}}/restore-fruit",
+							"host": [
+								"{{base_url}}{{fruits_route}}"
+							],
+							"path": [
+								"restore-fruit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update data",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}{{fruits_route}}",
+							"host": [
+								"{{base_url}}{{fruits_route}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3001",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlVTUlMtMjIxMTAyLWM5YTU4OCIsIm5hbWUiOiJBZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaXNEZWxldGVkIjpmYWxzZSwiY3JlYXRlZEJ5IjoiZ3Vlc3QiLCJjcmVhdGVkQXQiOiIyMDIyLTExLTAyVDE2OjI4OjM5LjAwMFoiLCJ1cGRhdGVkQnkiOiJzdXBlcmFkbWluIiwidXBkYXRlZEF0IjoiMjAyMi0xMS0wMlQxNzozNTo0NC4wMDBaIiwiVXNlclJvbGUiOnsicm9sZUNvZGUiOiJBRCIsInJvbGVOYW1lIjoiQWRtaW4ifSwiaWF0IjoxNjY4MjI3NDQ4LCJleHAiOjE2NjgyNDE4NDh9.GagAxon2W4M0f6nRI_r0WN55qZQjQ3PESEMIsGfhlWg",
+			"type": "string"
+		},
+		{
+			"key": "users_route",
+			"value": "/api/users",
+			"type": "string"
+		},
+		{
+			"key": "user_role_route",
+			"value": "/api/user-role",
+			"type": "string"
+		},
+		{
+			"key": "fruits_route",
+			"value": "/api/fruits",
+			"type": "string"
+		}
+	]
+}
