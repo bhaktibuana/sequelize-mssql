@@ -140,7 +140,7 @@ _response:_ JSON
     {
       "id": "string",
       "roleCode": "string",
-      "roleName": "Admin"
+      "roleName": "string"
     }
   ]
 }
